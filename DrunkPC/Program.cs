@@ -8,11 +8,12 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Media;
 
-//
-// Aplication Name: DrunkPC (My version of Barnacules Nerdgasm's tutorial: 
+
+// Aplication Name: DrunkPC 
+// (My version of Barnacules Nerdgasm's tutorial: 
 // https://www.youtube.com/watch?v=48k9eyVsC-M&index=4&list=PLEbaEyM-xt9mVQEAXGlRRmbO2Qp_oqF-n)
-// Description: Application that generates erratic mouse and keyboard movements
-// and input and generates system sounds and fake dialog to confuse the user.
+// Description: Application that generates erratic mouse and keyboard inputs
+// and generates system sounds and fake dialog to confuse the user.
 //
 // Runs at the default or the given times and will terminate when the time is up.
 // It has the potential to run infinitely though...
@@ -29,12 +30,12 @@ namespace DrunkPC
         public static int _totalDurationSeconds = _random.Next(10, 20);
 
         /// <summary>
-        /// 
+        /// Main entry point for the program
         /// </summary>
         /// <param name="args">
         /// Array of arguements currently:
-        /// 0: Startup delay for the program.
-        /// 1: Running time for the program.
+        /// 0: Startup delay for the program
+        /// 1: Running time for the program
         /// </param>
         static void Main(string[] args)
         {
@@ -47,12 +48,14 @@ namespace DrunkPC
                 _totalDurationSeconds = Convert.ToInt32(args[1]);
             }
 
+            #region Threads
             Thread drunkMouseThread = new Thread(new ThreadStart(DrunkMouseThread));
             Thread drunkKeyboardThread = new Thread(new ThreadStart(DrunkKeyboardThread));
             Thread drunkSoundThread = new Thread(new ThreadStart(DrunkSoundThread));
             Thread drunkPopUpThread = new Thread(new ThreadStart(DrunkPopUpThread));
+            #endregion
 
-            // Loop until termination aka restarting of the PC
+            // The loop is for future development and is pointless at this time
             while (true)
             {
                 // Wait to start irritation
@@ -93,6 +96,7 @@ namespace DrunkPC
             int moveX = 0;
             int moveY = 0;
 
+            #region Loop
             while (true)
             {
                 // Move the mouse cursor to a random coordinate 25% of the time
@@ -109,6 +113,7 @@ namespace DrunkPC
                 }
                 Thread.Sleep(50);
             }
+            #endregion
         }
 
         /// <summary>
@@ -120,6 +125,7 @@ namespace DrunkPC
 
             char key;
 
+            #region Loop
             while (true)
             {
                 // Type random key 25% of the time
@@ -136,6 +142,7 @@ namespace DrunkPC
                 }
                 Thread.Sleep(_random.Next(5) * 100);
             }
+            #endregion
         }
 
         /// <summary>
@@ -145,6 +152,7 @@ namespace DrunkPC
         {
             Console.WriteLine("DrunkSoundThread Started");
 
+            #region Loop
             while (true)
             {
                 // Play a sound 20% of the time every 1 second
@@ -172,6 +180,7 @@ namespace DrunkPC
                 }
                 Thread.Sleep(1000);
             }
+            #endregion
         }
 
         /// <summary>
@@ -181,6 +190,7 @@ namespace DrunkPC
         {
             Console.WriteLine("DrunkPopUpthread Started");
 
+            #region Loop
             while (true)
             {
                 // Show a popup warning/error 10% of the time every 10 seconds
@@ -207,6 +217,7 @@ namespace DrunkPC
                 }
                     Thread.Sleep(10000);
             }
+            #endregion
         }
     }
 }
